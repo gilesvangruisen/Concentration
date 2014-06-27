@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Fetchnotes. All rights reserved.
 //
 
+#import "GVGLinkedInWrapper.h"
+#import <LIALinkedInApplication.h>
+#import <LIALinkedInHttpClient.h>
+
 #import "GVGAuthenticationViewController.h"
 #import "GVGButton.h"
 
@@ -47,6 +51,7 @@
 
     // Spring animate the authentication button position y from offscreen origin up to 400
     POPSpringAnimation *buttonEnterPositionAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+    buttonEnterPositionAnimation.fromValue = @(self.view.frame.size.height);
     buttonEnterPositionAnimation.toValue = @(400);
 
     // Animate opacity form 0 to 1 while simultaenously sliding up
@@ -84,7 +89,46 @@
 
 - (void)authenticate
 {
-    NSLog(@"AUTH PLeZ");
+    // Fetch initialized shared API client
+    LIALinkedInHttpClient *client = [GVGLinkedInWrapper sharedAPIClient];
+
+    // Present web view to authenticate with LinkedIn
+    [client getAuthorizationCode:^(NSString *authorizationCode) {
+
+        // Authentication successful, save the code to user defaults
+        [[NSUserDefaults standardUserDefaults] setValue:authorizationCode forKey:@"authorizationCode"];
+
+        // Request access token data for authorization code
+        [client getAccessToken:authorizationCode success:^(NSDictionary *accessTokenData) {
+
+            // Token data received, pull the access token itself
+            NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+
+            [[NSUserDefaults standardUserDefaults] setValue:accessToken forKey:@"accessToken"];
+
+            [GVGLinkedInWrapper getCurrentUser];
+
+        } failure:^(NSError *error) {
+
+            // Access token query failed. Log error
+            NSLog(@"Quering accessToken failed %@", error);
+
+            // Notify user with alert that auth failed and they may try again
+            UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [failureAlert show];
+
+        }];
+
+    } cancel:nil failure:^(NSError *error) {
+
+        // Authentication failed. Log error
+        NSLog(@"Authentication failed with error: %@", error);
+
+        // Notify user with alert that auth failed and they may try again
+        UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Authentication failed. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [failureAlert show];
+
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden
