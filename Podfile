@@ -2,4 +2,5 @@
 # platform :ios, "6.0"
 
 pod 'pop'
+pod 'IOSLinkedInAPI'
 
