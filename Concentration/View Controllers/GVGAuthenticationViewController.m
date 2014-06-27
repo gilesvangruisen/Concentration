@@ -26,24 +26,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    // Instantiate background image view with launch image for seamless transition
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+
+    // Set the proper background image depending on screen size to prevent stretching
+    if (self.view.frame.size.height == 568) {
+        backgroundImageView.image = [UIImage imageNamed:@"LaunchImage-700-568h"];
+    } else {
+        backgroundImageView.image = [UIImage imageNamed:@"LaunchImage-700"];
+    }
+
+    // Add background image view as subview
+    [self.view addSubview:backgroundImageView];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

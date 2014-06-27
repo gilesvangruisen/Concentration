@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */; };
+		501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */; };
 		505D7586195DD7AB002B1403 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7585195DD7AB002B1403 /* main.m */; };
 		505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7588195DD7AB002B1403 /* AppDelegate.m */; };
 		505D758B195DD7AB002B1403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505D758A195DD7AB002B1403 /* Images.xcassets */; };
@@ -29,6 +30,8 @@
 		1CD4B2A4436A47BA97923087 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		501CE6C5195DEA1F000935E7 /* GVGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGAuthenticationViewController.h; path = "View Controllers/GVGAuthenticationViewController.h"; sourceTree = "<group>"; };
 		501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGAuthenticationViewController.m; path = "View Controllers/GVGAuthenticationViewController.m"; sourceTree = "<group>"; };
+		501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGLinkedInWrapper.h; path = "LinkedIn Lib Wrapper/GVGLinkedInWrapper.h"; sourceTree = "<group>"; };
+		501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGLinkedInWrapper.m; path = "LinkedIn Lib Wrapper/GVGLinkedInWrapper.m"; sourceTree = "<group>"; };
 		505D7580195DD7AB002B1403 /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505D7584195DD7AB002B1403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505D7585195DD7AB002B1403 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 				505D7588195DD7AB002B1403 /* AppDelegate.m */,
 				501CE6C5195DEA1F000935E7 /* GVGAuthenticationViewController.h */,
 				501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */,
+				501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */,
+				501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */,
 				505D758A195DD7AB002B1403 /* Images.xcassets */,
 				505D7583195DD7AB002B1403 /* Supporting Files */,
 			);
@@ -261,6 +266,7 @@
 			files = (
 				501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */,
 				505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */,
+				501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */,
 				505D7586195DD7AB002B1403 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Concentration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -379,6 +386,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Concentration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
