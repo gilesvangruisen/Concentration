@@ -9,12 +9,9 @@
 #import "GVGLinkedInWrapper.h"
 #import <LIALinkedInApplication.h>
 #import <LIALinkedInHttpClient.h>
-
 #import "GVGAuthenticationViewController.h"
 #import "GVGButton.h"
-
 #import "GVGMatchingViewController.h"
-
 #import <pop/POP.h>
 
 @interface GVGAuthenticationViewController ()

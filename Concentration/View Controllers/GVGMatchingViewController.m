@@ -8,11 +8,18 @@
 
 #import "GVGMatchingViewController.h"
 #import "Person.h"
+#import "PCLoadingView.h"
 #import "NSArray+RandomSample.h"
 
 @interface GVGMatchingViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSArray *persons;
+
+@property (nonatomic, strong) PCLoadingView *loadingView;
+@property (nonatomic, strong) UILabel *loadingLabel;
+
+@property (nonatomic) NSInteger currentScore;
+
 
 @end
 
@@ -26,8 +33,13 @@ typedef enum : NSUInteger {
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Check if user has seen tutorial, display tutorial view if not
+        // Begin loading persons
         [self loadPersons];
+
+        // Check if user has seen tutorial, display tutorial view if not
+        if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
+            // Pop in tutorial view
+        }
     }
     return self;
 }
@@ -40,8 +52,10 @@ typedef enum : NSUInteger {
         // Check if we have enough persons to play
         if (persons.count >= 6) {
 
-            // We have at least six, set to selfpersons
+            // We have at least six, set to self.persons
             self.persons = persons;
+
+            [self populatePeopleCards];
 
         } else {
 
@@ -57,6 +71,13 @@ typedef enum : NSUInteger {
         }
 
     } failure:nil];
+}
+
+- (void)populatePeopleCards
+{
+    // Init cards table with six random people, add to view
+    // fade out loading
+    // fade in cards table, scores
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -83,10 +104,24 @@ typedef enum : NSUInteger {
 
     // Set image of background view to greyed shattered pattern
     backgroundImageView.image = [UIImage imageNamed:@"MatchingBackground"];
-    
+
     // Add background image view as subview
     [self.view addSubview:backgroundImageView];
-    
+
+    // Initialize loading view (80x80 centered)
+    self.loadingView = [[PCLoadingView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 2) - 20, (self.view.frame.size.height / 2) - 40, 40, 40)];
+
+    self.loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 2) - 100, (self.view.frame.size.height / 2) + 20, 200, 20)];
+
+    self.loadingLabel.text = @"Loading Connections";
+    self.loadingLabel.textAlignment = NSTextAlignmentCenter;
+    self.loadingLabel.textColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
+    self.loadingLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f];
+
+    [self.view addSubview:self.loadingLabel];
+
+    // Add loading view as subview
+    [self.view addSubview:self.loadingView];
 }
 
 - (void)didReceiveMemoryWarning

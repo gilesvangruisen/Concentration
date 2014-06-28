@@ -10,6 +10,4 @@
 
 @interface GVGMatchingViewController : UIViewController
 
-
-
 @end
