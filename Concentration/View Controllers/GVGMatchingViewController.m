@@ -56,10 +56,6 @@ typedef enum : NSUInteger {
 
         }
 
-        for (Person *person in [self.persons randomSample:6]) {
-            NSLog(@"PERSON %@, %@, %@", person.name, person.pictureURL, person.hint);
-        }
-
     } failure:nil];
 }
 
