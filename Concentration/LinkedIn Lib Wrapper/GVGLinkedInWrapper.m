@@ -22,7 +22,7 @@
                                                                   clientId:@"773m1dw0zr4nyi" // API key
                                                               clientSecret:@"3WQIZkTWWK3AAtxG" // API secret
                                                                      state:@"a03Jf8d2cH29s0CdJ" // CORS token (forgery prevention)
-                                                             grantedAccess:@[@"r_basicprofile", @"r_network"]];
+                                                             grantedAccess:@[@"r_fullprofile", @"r_network"]];
         }
     });
 
@@ -40,10 +40,25 @@
     } failure:nil];
 }
 
++ (void)getConnectionsWithSuccess:(void(^)(id connections))success failure:(void(^)(NSError *error))failure
+{
+    [self confirmAuthorization:^(NSString *accessToken) {
+        NSLog(@"%@", accessToken);
+        NSString *urlString = [NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~/connections:(id)?oauth2_access_token=%@&format=json", accessToken];
+
+        [[self sharedAPIClient] GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+            success([result objectForKey:@"values"]);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@", operation.responseObject);
+            NSLog(@"FETCHING CONNECTIONS FAILURE WITH ERROR: %@", error);
+        }];
+    } failure:nil];
+}
+
 + (void)confirmAuthorization:(void (^)(NSString *accessToken))success failure:(void (^)())failure {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [userDefaults valueForKey:@"accessToken"];
-    
+
     if (accessToken) {
         success(accessToken);
     } else {

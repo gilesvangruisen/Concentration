@@ -19,4 +19,6 @@
 
 + (void)getCurrentUser;
 
++ (void)getConnectionsWithSuccess:(void(^)(id connections))success failure:(void(^)(NSError *error))failure;
+
 @end
