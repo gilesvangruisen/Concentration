@@ -91,12 +91,29 @@
 
 + (void)getConnectionsWithSuccess:(void(^)(id connections))success failure:(void(^)(NSError *error))failure
 {
+    // Wrap call to ensure authorized request
     [self confirmAuthorization:^(NSString *accessToken) {
-        NSLog(@"%@", accessToken);
+
+        // Build request URL with access token
         NSString *urlString = [NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~/connections:(id,picture-url,first-name,last-name,headline,location:(name))?oauth2_access_token=%@&format=json", accessToken];
 
+        // Make authorized call to LinkedIn connections URL
         [[self sharedAPIClient] GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
-            success([result objectForKey:@"values"]);
+
+            // Call succeeded, ensure we have connections
+            if([result objectForKey:@"values"]) {
+
+                // Call success block with connections
+                success([result objectForKey:@"values"]);
+
+            } else {
+
+                // No connections, call failure
+                NSError *error = [NSError errorWithDomain:@"Error loading connections" code:0 userInfo:nil];
+                failure(error);
+
+            }
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"FETCHING CONNECTIONS FAILURE WITH OBJECT: %@", operation.responseObject);
             NSLog(@"FETCHING CONNECTIONS FAILURE WITH ERROR: %@", error);
