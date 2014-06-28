@@ -13,6 +13,8 @@
 #import "GVGAuthenticationViewController.h"
 #import "GVGButton.h"
 
+#import "GVGMatchingViewController.h"
+
 #import <pop/POP.h>
 
 @interface GVGAuthenticationViewController ()
@@ -106,7 +108,18 @@
 
             [[NSUserDefaults standardUserDefaults] setValue:accessToken forKey:@"accessToken"];
 
-            [GVGLinkedInWrapper getCurrentUser];
+            // Wait a bit to let web view finish sliding down before transition to matching view
+
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // HACK -- YOU SHOULD MODIFY THE LINKEDIN LIBRARY WITH A COMPLETION BLOCK FOR THE MODAL TRANSITION
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // Transition to matching view
+                GVGMatchingViewController *matchingViewController = [GVGMatchingViewController new];
+                matchingViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+                [self presentViewController:matchingViewController animated:YES completion:nil];
+            });
 
         } failure:^(NSError *error) {
 

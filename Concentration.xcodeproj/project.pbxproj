@@ -10,6 +10,8 @@
 		501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */; };
 		501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */; };
 		501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6CC195DFDFA000935E7 /* GVGButton.m */; };
+		504129FE195E26C400F3B126 /* GVGMatchingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 504129FD195E26C400F3B126 /* GVGMatchingViewController.m */; };
+		50412A02195E34AF00F3B126 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A01195E34AF00F3B126 /* Person.m */; };
 		505D7586195DD7AB002B1403 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7585195DD7AB002B1403 /* main.m */; };
 		505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7588195DD7AB002B1403 /* AppDelegate.m */; };
 		505D758B195DD7AB002B1403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505D758A195DD7AB002B1403 /* Images.xcassets */; };
@@ -35,6 +37,10 @@
 		501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGLinkedInWrapper.m; path = "LinkedIn Lib Wrapper/GVGLinkedInWrapper.m"; sourceTree = "<group>"; };
 		501CE6CB195DFDFA000935E7 /* GVGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGButton.h; path = UI/GVGButton.h; sourceTree = "<group>"; };
 		501CE6CC195DFDFA000935E7 /* GVGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGButton.m; path = UI/GVGButton.m; sourceTree = "<group>"; };
+		504129FC195E26C400F3B126 /* GVGMatchingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGMatchingViewController.h; path = "View Controllers/GVGMatchingViewController.h"; sourceTree = "<group>"; };
+		504129FD195E26C400F3B126 /* GVGMatchingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGMatchingViewController.m; path = "View Controllers/GVGMatchingViewController.m"; sourceTree = "<group>"; };
+		50412A00195E34AF00F3B126 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Models/Person.h; sourceTree = "<group>"; };
+		50412A01195E34AF00F3B126 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Models/Person.m; sourceTree = "<group>"; };
 		505D7580195DD7AB002B1403 /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505D7584195DD7AB002B1403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505D7585195DD7AB002B1403 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -75,6 +81,26 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		504129FF195E26CD00F3B126 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				501CE6C5195DEA1F000935E7 /* GVGAuthenticationViewController.h */,
+				501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */,
+				504129FC195E26C400F3B126 /* GVGMatchingViewController.h */,
+				504129FD195E26C400F3B126 /* GVGMatchingViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		50412A03195E34B600F3B126 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				50412A00195E34AF00F3B126 /* Person.h */,
+				50412A01195E34AF00F3B126 /* Person.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		505D7577195DD7AB002B1403 = {
 			isa = PBXGroup;
 			children = (
@@ -100,8 +126,8 @@
 			children = (
 				505D7587195DD7AB002B1403 /* AppDelegate.h */,
 				505D7588195DD7AB002B1403 /* AppDelegate.m */,
-				501CE6C5195DEA1F000935E7 /* GVGAuthenticationViewController.h */,
-				501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */,
+				50412A03195E34B600F3B126 /* Models */,
+				504129FF195E26CD00F3B126 /* View Controllers */,
 				501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */,
 				501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */,
 				501CE6CE195DFDFE000935E7 /* UI */,
@@ -277,7 +303,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				504129FE195E26C400F3B126 /* GVGMatchingViewController.m in Sources */,
 				501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */,
+				50412A02195E34AF00F3B126 /* Person.m in Sources */,
 				505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */,
 				501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */,
 				501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */,
