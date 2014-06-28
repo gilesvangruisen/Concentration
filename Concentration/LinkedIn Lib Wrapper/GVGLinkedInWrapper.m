@@ -14,10 +14,16 @@
 
 + (LIALinkedInHttpClient *)sharedAPIClient
 {
+    // Maintain a shared, static instance of LIALinkedInApplication, set to nil initially
     static LIALinkedInApplication *linkedInApplication = nil;
     static dispatch_once_t onceToken;
+
     dispatch_once(&onceToken, ^{
+
+        // On first call, linkedInApplication will be nil
         if (!linkedInApplication) {
+
+            // If first call, set linkedInApplication
             linkedInApplication = [LIALinkedInApplication applicationWithRedirectURL:@"http://fetchnotes.com/"
                                                                   clientId:@"773m1dw0zr4nyi" // API key
                                                               clientSecret:@"3WQIZkTWWK3AAtxG" // API secret
@@ -26,45 +32,76 @@
         }
     });
 
+    // Return client for static application
     return [LIALinkedInHttpClient clientForApplication:linkedInApplication presentingViewController:nil];
 }
 
-+ (void)getCurrentUser
+#pragma mark Authorization
+
++ (void)requestAuthorizationWithSuccess:(void(^)())success tokenFailure:(void(^)(NSError *error))tokenFailure authorizationFailure:(void(^)(NSError *error))authorizationFailure
 {
-    [self confirmAuthorization:^(NSString *accessToken) {
-        [[self sharedAPIClient] GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
-            NSLog(@"current user %@", result);
-        }        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"failed to fetch current user %@", error);
-        }];
-    } failure:nil];
+    // Fetch initialized shared API client
+    LIALinkedInHttpClient *client = [GVGLinkedInWrapper sharedAPIClient];
+
+    // Present web view to authenticate with LinkedIn
+    [client getAuthorizationCode:^(NSString *authorizationCode) {
+
+        // Authentication successful, save the code to user defaults
+        [[NSUserDefaults standardUserDefaults] setValue:authorizationCode forKey:@"authorizationCode"];
+
+        // Request access token data for authorization code
+        [client getAccessToken:authorizationCode success:^(NSDictionary *accessTokenData) {
+
+            // Token data received, pull the access token itself
+            NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+
+            // Save the access token to user defaults
+            [[NSUserDefaults standardUserDefaults] setValue:accessToken forKey:@"accessToken"];
+
+            // Call success block
+            success();
+
+        } failure:tokenFailure];
+
+    } cancel:nil failure:authorizationFailure];
 }
+
+// Wrapper to ensure authorized API calls
++ (void)confirmAuthorization:(void (^)(NSString *accessToken))success failure:(void (^)())failure {
+
+    // Look up access token in user defaults
+    NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
+
+    if (accessToken) {
+
+        // Found access token, call success block (API call) with token
+        success(accessToken);
+
+    } else {
+
+        // No access token found, log error
+        NSLog(@"User must be authenticated before attempting to make a request.");
+
+        // Call failure block (no token found)
+        failure();
+    }
+}
+
+#pragma mark API Calls
 
 + (void)getConnectionsWithSuccess:(void(^)(id connections))success failure:(void(^)(NSError *error))failure
 {
     [self confirmAuthorization:^(NSString *accessToken) {
         NSLog(@"%@", accessToken);
-        NSString *urlString = [NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~/connections:(id)?oauth2_access_token=%@&format=json", accessToken];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~/connections:(id,picture-url,first-name,last-name,headline,location:(name))?oauth2_access_token=%@&format=json", accessToken];
 
         [[self sharedAPIClient] GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
             success([result objectForKey:@"values"]);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", operation.responseObject);
+            NSLog(@"FETCHING CONNECTIONS FAILURE WITH OBJECT: %@", operation.responseObject);
             NSLog(@"FETCHING CONNECTIONS FAILURE WITH ERROR: %@", error);
         }];
     } failure:nil];
-}
-
-+ (void)confirmAuthorization:(void (^)(NSString *accessToken))success failure:(void (^)())failure {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *accessToken = [userDefaults valueForKey:@"accessToken"];
-
-    if (accessToken) {
-        success(accessToken);
-    } else {
-        NSLog(@"User must be authenticated before attempting to make a request.");
-        failure();
-    }
 }
 
 @end

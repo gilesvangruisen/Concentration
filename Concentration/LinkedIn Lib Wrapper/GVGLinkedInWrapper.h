@@ -14,11 +14,13 @@
 
 @interface GVGLinkedInWrapper : NSObject
 
-// Returns API client instance, requests authentication if not yet auth'd
+// Returns shared API client instance
 + (LIALinkedInHttpClient *)sharedAPIClient;
 
-+ (void)getCurrentUser;
+// Initial authorization with return blocks for successful auth, token failure (failed ot gen token), authorization failure (usually connection failure)
++ (void)requestAuthorizationWithSuccess:(void(^)())success tokenFailure:(void(^)(NSError *error))tokenFailure authorizationFailure:(void(^)(NSError *error))authorizationFailure;
 
+// Fetches all of current user's connections asynchronously, returns them through success block
 + (void)getConnectionsWithSuccess:(void(^)(id connections))success failure:(void(^)(NSError *error))failure;
 
 @end

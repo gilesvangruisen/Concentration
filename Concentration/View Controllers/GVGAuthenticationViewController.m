@@ -91,54 +91,40 @@
 
 - (void)authenticate
 {
-    // Fetch initialized shared API client
-    LIALinkedInHttpClient *client = [GVGLinkedInWrapper sharedAPIClient];
+    // Authorize with linkedin wrapper, passing blocks for each success, auth failure, token failure
+    __block void (^successBlock)() = ^{
 
-    // Present web view to authenticate with LinkedIn
-    [client getAuthorizationCode:^(NSString *authorizationCode) {
+        // New instance of matching view controller
+        GVGMatchingViewController *matchingViewController = [GVGMatchingViewController new];
 
-        // Authentication successful, save the code to user defaults
-        [[NSUserDefaults standardUserDefaults] setValue:authorizationCode forKey:@"authorizationCode"];
+        // Transition style should be horizontal flip
+        matchingViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 
-        // Request access token data for authorization code
-        [client getAccessToken:authorizationCode success:^(NSDictionary *accessTokenData) {
+        // Present matching view controller
+        [self presentViewController:matchingViewController animated:YES completion:nil];
 
-            // Token data received, pull the access token itself
-            NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+    };
 
-            [[NSUserDefaults standardUserDefaults] setValue:accessToken forKey:@"accessToken"];
+    [GVGLinkedInWrapper requestAuthorizationWithSuccess:^{
 
-            // Wait a bit to let web view finish sliding down before transition to matching view
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), successBlock);
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // HACK -- YOU SHOULD MODIFY THE LINKEDIN LIBRARY WITH A COMPLETION BLOCK FOR THE MODAL TRANSITION
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    } tokenFailure:^(NSError *error) {
 
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                // Transition to matching view
-                GVGMatchingViewController *matchingViewController = [GVGMatchingViewController new];
-                matchingViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-                [self presentViewController:matchingViewController animated:YES completion:nil];
-            });
+        // Access token query failed. Log error
+        NSLog(@"Quering accessToken failed %@", error);
 
-        } failure:^(NSError *error) {
+        // Notify user with alert that auth failed and they may try again
+        UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [failureAlert show];
 
-            // Access token query failed. Log error
-            NSLog(@"Quering accessToken failed %@", error);
-
-            // Notify user with alert that auth failed and they may try again
-            UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [failureAlert show];
-
-        }];
-
-    } cancel:nil failure:^(NSError *error) {
+    } authorizationFailure:^(NSError *error) {
 
         // Authentication failed. Log error
         NSLog(@"Authentication failed with error: %@", error);
 
         // Notify user with alert that auth failed and they may try again
-        UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Authentication failed. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"Could not connect to LinkedIn. Please check your Internet connceiton and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [failureAlert show];
 
     }];

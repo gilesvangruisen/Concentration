@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500E5564195E5712002B590E /* NSArray+RandomSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 500E5563195E5712002B590E /* NSArray+RandomSample.m */; };
 		501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */; };
 		501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */; };
 		501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6CC195DFDFA000935E7 /* GVGButton.m */; };
@@ -31,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		1CD4B2A4436A47BA97923087 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		500E5562195E5712002B590E /* NSArray+RandomSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RandomSample.h"; sourceTree = "<group>"; };
+		500E5563195E5712002B590E /* NSArray+RandomSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RandomSample.m"; sourceTree = "<group>"; };
 		501CE6C5195DEA1F000935E7 /* GVGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGAuthenticationViewController.h; path = "View Controllers/GVGAuthenticationViewController.h"; sourceTree = "<group>"; };
 		501CE6C6195DEA1F000935E7 /* GVGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGAuthenticationViewController.m; path = "View Controllers/GVGAuthenticationViewController.m"; sourceTree = "<group>"; };
 		501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGLinkedInWrapper.h; path = "LinkedIn Lib Wrapper/GVGLinkedInWrapper.h"; sourceTree = "<group>"; };
@@ -72,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		500E5565195E5715002B590E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				500E5562195E5712002B590E /* NSArray+RandomSample.h */,
+				500E5563195E5712002B590E /* NSArray+RandomSample.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		501CE6CE195DFDFE000935E7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +138,7 @@
 			children = (
 				505D7587195DD7AB002B1403 /* AppDelegate.h */,
 				505D7588195DD7AB002B1403 /* AppDelegate.m */,
+				500E5565195E5715002B590E /* Categories */,
 				50412A03195E34B600F3B126 /* Models */,
 				504129FF195E26CD00F3B126 /* View Controllers */,
 				501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */,
@@ -310,6 +323,7 @@
 				501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */,
 				501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */,
 				505D7586195DD7AB002B1403 /* main.m in Sources */,
+				500E5564195E5712002B590E /* NSArray+RandomSample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
