@@ -7,10 +7,18 @@
 //
 
 #import "GVGMatchingViewController.h"
+#import "Person.h"
+#import "NSArray+RandomSample.h"
 
-@interface GVGMatchingViewController ()
+@interface GVGMatchingViewController () <UIAlertViewDelegate>
+
+@property (nonatomic, strong) NSArray *persons;
 
 @end
+
+typedef enum : NSUInteger {
+    AVTNotEnoughConnections
+} GVGAlertViewType;
 
 @implementation GVGMatchingViewController
 
@@ -18,9 +26,56 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        // Check if user has seen tutorial, display tutorial view if not
+        [self loadPersons];
     }
     return self;
+}
+
+- (void)loadPersons
+{
+    // Begin loading connections
+    [Person publicPersonsWithSuccess:^(NSArray *persons) {
+
+        // Check if we have enough persons to play
+        if (persons.count >= 6) {
+
+            // We have at least six, set to selfpersons
+            self.persons = persons;
+
+        } else {
+
+            // Not enough connections to play, alert user
+            UIAlertView *notEnoughConnectionsAlert = [[UIAlertView alloc] initWithTitle:@"Oh no!" message:@"You must have at least six public connections to play." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+
+            // Set tag so delegate knows how to react upon dismissal
+            notEnoughConnectionsAlert.tag = AVTNotEnoughConnections;
+
+            // Present alert
+            [notEnoughConnectionsAlert show];
+
+        }
+
+        for (Person *person in [self.persons randomSample:6]) {
+            NSLog(@"PERSON %@, %@, %@", person.name, person.pictureURL, person.hint);
+        }
+
+    } failure:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+
+    // Alert view dismissed, check tag
+    switch (alertView.tag) {
+
+        case AVTNotEnoughConnections:
+
+            // Alert is for not enough connections, dismiss view controller
+            [self dismissViewControllerAnimated:YES completion:nil];
+
+            break;
+    }
 }
 
 - (void)viewDidLoad
@@ -44,15 +99,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (BOOL)prefersStatusBarHidden
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    return YES;
 }
-*/
 
 @end
