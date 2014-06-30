@@ -36,7 +36,7 @@
         [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchDown];
 
         // Add touch up targets
-        [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpOutside];
+        [self addTarget:self action:@selector(touchUpOutside) forControlEvents:UIControlEventTouchUpOutside];
         [self addTarget:self action:@selector(touchUpInside) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -68,8 +68,9 @@
     }];
 }
 
-- (void)touchUp
+- (void)touchUpOutside
 {
+    [self fadeTo:0.5];
     [self bounceToScale:CGPointMake(1, 1) completion:nil];
 }
 

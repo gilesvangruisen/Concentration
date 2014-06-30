@@ -13,6 +13,9 @@
 // Visible modal view
 @property (nonatomic, strong) UIView *modalView;
 
+// Call on delegate to present modal view
+- (void)presentModalView:(UIView *)view;
+
 // Call on delegate to dismiss the view
 - (void)dismissModalView;
 

@@ -24,3 +24,6 @@ Open Concentration.xcworkspace
 ```
 
 This should run fine in simulator but you'll likely have to change bundle identifier and/or provisioning profiles to run on device.
+
+This has been tested primarily on an iPhone 5. As of now, there's a bit of autolayout work required to get things to play well with the shorter screens.
+

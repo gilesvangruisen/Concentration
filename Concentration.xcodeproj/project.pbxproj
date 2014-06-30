@@ -22,6 +22,7 @@
 		505D758B195DD7AB002B1403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505D758A195DD7AB002B1403 /* Images.xcassets */; };
 		505D7597195DD7AB002B1403 /* ConcentrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7596195DD7AB002B1403 /* ConcentrationTests.m */; };
 		506084CE1961CD9B0015F177 /* GVGTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 506084CD1961CD9B0015F177 /* GVGTutorialView.m */; };
+		5085352F1961F020009B6A39 /* GVGVictoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5085352E1961F020009B6A39 /* GVGVictoryView.m */; };
 		50966FDF19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */; };
 		50F9034A19612305000C9758 /* UIView+Fade.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F9034919612305000C9758 /* UIView+Fade.m */; };
 		998F971794B34314BFA695E5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED43B57793884F1E99018E47 /* libPods.a */; };
@@ -70,6 +71,8 @@
 		506084CA1961CCF00015F177 /* GVGModalViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GVGModalViewDelegate.h; path = Protocol/GVGModalViewDelegate.h; sourceTree = "<group>"; };
 		506084CC1961CD9B0015F177 /* GVGTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGTutorialView.h; path = UI/Modal/GVGTutorialView.h; sourceTree = "<group>"; };
 		506084CD1961CD9B0015F177 /* GVGTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGTutorialView.m; path = UI/Modal/GVGTutorialView.m; sourceTree = "<group>"; };
+		5085352D1961F020009B6A39 /* GVGVictoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGVictoryView.h; path = UI/Modal/GVGVictoryView.h; sourceTree = "<group>"; };
+		5085352E1961F020009B6A39 /* GVGVictoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGVictoryView.m; path = UI/Modal/GVGVictoryView.m; sourceTree = "<group>"; };
 		50966FDD19609C8F00E7C699 /* NSMutableArray+RandomShuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+RandomShuffle.h"; path = "Categories/NSMutableArray+RandomShuffle.h"; sourceTree = "<group>"; };
 		50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+RandomShuffle.m"; path = "Categories/NSMutableArray+RandomShuffle.m"; sourceTree = "<group>"; };
 		50F9034819612305000C9758 /* UIView+Fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Fade.h"; path = "Categories/UIView+Fade.h"; sourceTree = "<group>"; };
@@ -123,6 +126,8 @@
 				50412A24195F833900F3B126 /* GVGCardButton.m */,
 				506084CC1961CD9B0015F177 /* GVGTutorialView.h */,
 				506084CD1961CD9B0015F177 /* GVGTutorialView.m */,
+				5085352D1961F020009B6A39 /* GVGVictoryView.h */,
+				5085352E1961F020009B6A39 /* GVGVictoryView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504129FE195E26C400F3B126 /* GVGMatchingViewController.m in Sources */,
+				5085352F1961F020009B6A39 /* GVGVictoryView.m in Sources */,
 				501CE6C7195DEA1F000935E7 /* GVGAuthenticationViewController.m in Sources */,
 				50412A1F195F6CCB00F3B126 /* PCLoadingView.m in Sources */,
 				50F9034A19612305000C9758 /* UIView+Fade.m in Sources */,

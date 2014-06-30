@@ -14,6 +14,7 @@
 #import "GVGCardGridView.h"
 #import "UIView+Fade.h"
 #import "GVGTutorialView.h"
+#import "GVGVictoryView.h"
 
 @interface GVGMatchingViewController () <UIAlertViewDelegate, GVGCardGridDelegate>
 
@@ -79,7 +80,7 @@ typedef enum : NSUInteger {
                 [self presentModalView:[GVGTutorialView new]];
 
                 // Mark seenTutorial true in user defaults
-                [[NSUserDefaults standardUserDefaults] setValue:@"true" forKeyPath:@"seenTutorial"];
+//                [[NSUserDefaults standardUserDefaults] setValue:@"true" forKeyPath:@"seenTutorial"];
             }
 
             // Populate card
@@ -298,7 +299,8 @@ typedef enum : NSUInteger {
     if (self.score == 12) {
 
         // All matches made, game is over
-        UIAlertView *congrats = [[UIAlertView alloc] initWithTitle:@"Congratulations!" message:@"You made all the matches. Nice work!" delegate:nil cancelButtonTitle:@"Woohoo!" otherButtonTitles:nil];
+        GVGVictoryView *victoryView = [GVGVictoryView new];
+        [self presentModalView:victoryView];
 
         // Repopulate people cards
         [self populatePeopleCards];
@@ -306,8 +308,6 @@ typedef enum : NSUInteger {
         // Reset score
         self.score = 0;
 
-        // Show alert
-        [congrats show];
     }
 }
 
@@ -316,7 +316,7 @@ typedef enum : NSUInteger {
     NSLog(@"NO MATCH");
 }
 
-- (void)presentModalView:(UIView<GVGModalViewDelegate> *)view
+- (void)presentModalView:(UIView *)view
 {
     // Set modal view
     self.modalView = view;
