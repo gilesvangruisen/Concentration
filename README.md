@@ -3,8 +3,7 @@ Concentration
 
 A game of connections and networking
 
-Playing
-======
+## To play
 
 Clone repo
 ```
