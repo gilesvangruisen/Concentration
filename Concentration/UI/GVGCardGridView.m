@@ -9,14 +9,14 @@
 #import "GVGCardGridView.h"
 #import "Person.h"
 #import "NSMutableArray+RandomShuffle.h"
+#import "UIView+Fade.h"
 
 @interface GVGCardGridView ()
-
-@property (nonatomic, strong) NSArray *cards;
 
 @end
 
 @implementation GVGCardGridView
+@synthesize safeToFlip;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -25,6 +25,7 @@
 
         // Initially set opacity to 0
         self.layer.opacity = 0;
+        safeToFlip = YES;
 
     }
     return self;
@@ -58,25 +59,32 @@
     // Loop over persons and add name to one card, picture to another
     for (Person *person in _persons) {
 
-        // Pop last object off temp cards
+        // Pop last two objects off temp cards, one for name, one for face
         GVGCardButton *nameCard = [cardsToPopulate lastObject];
         [cardsToPopulate removeLastObject];
 
-        // Card is to be used as name
-        nameCard.type = GVGCardTypeName;
-
-        // Populate card with current person
-        nameCard.person = person;
-
-        // Pop last object off temp cards
         GVGCardButton *faceCard = [cardsToPopulate lastObject];
         [cardsToPopulate removeLastObject];
 
-        // Card is picture card
+        // Set type, name and picture respectively
+        nameCard.type = GVGCardTypeName;
         faceCard.type = GVGCardTypePicture;
 
-        // Populate card with current person
+        // Initial flipped state is face down
+        nameCard.flippedState = GVGFlippedStateFaceDown;
+        faceCard.flippedState = GVGFlippedStateFaceDown;
+
+        // Populate cards with current person
+        nameCard.person = person;
         faceCard.person = person;
+
+        // Set delegates
+        nameCard.delegate = self;
+        faceCard.delegate = self;
+
+        // Opacity
+        [nameCard fadeTo:0.5];
+        [faceCard fadeTo:0.5];
 
     }
 
@@ -87,6 +95,18 @@
 
     // Cards loaded, fade in
     [self fadeInCards];
+}
+
+- (void)didFlipCard:(GVGCardButton *)card
+{
+    [self.delegate didFlipCard:card];
+}
+
+- (void)flipCards:(NSArray *)cards
+{
+    for (GVGCardButton *card in cards) {
+        [card flip];
+    }
 }
 
 @end

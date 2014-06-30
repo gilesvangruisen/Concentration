@@ -12,7 +12,9 @@
 // Forward declare delegate protocol to use in properties
 @protocol GVGCardGridDelegate;
 
-@interface GVGCardGridView : UIView
+@interface GVGCardGridView : UIView <GVGCardButtonDelegate>
+
+@property (nonatomic, strong) NSArray *cards;
 
 // Array containing six persons to populate cards
 @property (nonatomic, strong) NSArray *persons;
@@ -34,15 +36,25 @@
 @property (nonatomic, strong) IBOutlet GVGCardButton *card10;
 @property (nonatomic, strong) IBOutlet GVGCardButton *card11;
 
+// Pass an array of cards to be flipped
+- (void)flipCards:(NSArray *)cards;
+
 @end
 
 // Delegate protocol
 @protocol GVGCardGridDelegate <NSObject>
 
+@optional
+
 // Called when persons are loaded and about to fade in
 - (void)cardsWillAppear;
 
-// Called when a user selects a card
-- (void)didSelectCardAtIndex:(NSInteger)index;
+@required
+
+// Called when a user flips a card
+- (void)didFlipCard:(GVGCardButton *)card;
+
+// Called when a user makes an incorrect match
+- (void)didMismatch;
 
 @end
