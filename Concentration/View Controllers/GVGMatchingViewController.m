@@ -326,10 +326,6 @@ typedef enum : NSUInteger {
 
     // Modals should have round corners, shadow
     self.modalView.layer.cornerRadius = 6.0f;
-    self.modalView.layer.shadowRadius = 2.0f;
-    self.modalView.layer.shadowOpacity = 0.25f;
-    self.modalView.layer.shadowOffset = CGSizeMake(0, 0);
-    self.modalView.layer.shadowColor = [UIColor blackColor].CGColor;
 
     // Add modalView as subview
     [self.view addSubview:self.modalView];
