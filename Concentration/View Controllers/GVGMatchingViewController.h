@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GVGModalViewDelegate.h"
 
 @class GVGCardButton;
 @class GVGCardGridView;
 
-@interface GVGMatchingViewController : UIViewController
+@interface GVGMatchingViewController : UIViewController <GVGModalViewDelegate>
 
 // IBOutlet property to connect view to nib
 @property (nonatomic, strong) IBOutlet UIView *view;

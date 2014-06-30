@@ -21,6 +21,8 @@
 		505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7588195DD7AB002B1403 /* AppDelegate.m */; };
 		505D758B195DD7AB002B1403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505D758A195DD7AB002B1403 /* Images.xcassets */; };
 		505D7597195DD7AB002B1403 /* ConcentrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7596195DD7AB002B1403 /* ConcentrationTests.m */; };
+		506084CE1961CD9B0015F177 /* GVGTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 506084CD1961CD9B0015F177 /* GVGTutorialView.m */; };
+		506084D01961CDD30015F177 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506084CF1961CDD30015F177 /* TutorialView.xib */; };
 		50966FDF19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */; };
 		50F9034A19612305000C9758 /* UIView+Fade.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F9034919612305000C9758 /* UIView+Fade.m */; };
 		998F971794B34314BFA695E5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED43B57793884F1E99018E47 /* libPods.a */; };
@@ -66,6 +68,10 @@
 		505D7590195DD7AB002B1403 /* ConcentrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcentrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		505D7595195DD7AB002B1403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505D7596195DD7AB002B1403 /* ConcentrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConcentrationTests.m; sourceTree = "<group>"; };
+		506084CA1961CCF00015F177 /* GVGModalViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GVGModalViewDelegate.h; path = Protocol/GVGModalViewDelegate.h; sourceTree = "<group>"; };
+		506084CC1961CD9B0015F177 /* GVGTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGTutorialView.h; path = UI/Modal/GVGTutorialView.h; sourceTree = "<group>"; };
+		506084CD1961CD9B0015F177 /* GVGTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGTutorialView.m; path = UI/Modal/GVGTutorialView.m; sourceTree = "<group>"; };
+		506084CF1961CDD30015F177 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TutorialView.xib; path = UI/Modal/TutorialView.xib; sourceTree = "<group>"; };
 		50966FDD19609C8F00E7C699 /* NSMutableArray+RandomShuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+RandomShuffle.h"; path = "Categories/NSMutableArray+RandomShuffle.h"; sourceTree = "<group>"; };
 		50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+RandomShuffle.m"; path = "Categories/NSMutableArray+RandomShuffle.m"; sourceTree = "<group>"; };
 		50F9034819612305000C9758 /* UIView+Fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Fade.h"; path = "Categories/UIView+Fade.h"; sourceTree = "<group>"; };
@@ -108,7 +114,7 @@
 		501CE6CE195DFDFE000935E7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				50412A261960856300F3B126 /* MatchingView.xib */,
+				506084D11961CDDB0015F177 /* Nib */,
 				50412A2F196091FC00F3B126 /* GVGCardGridView.h */,
 				50412A30196091FC00F3B126 /* GVGCardGridView.m */,
 				50412A1D195F6CCB00F3B126 /* PCLoadingView.h */,
@@ -117,6 +123,8 @@
 				501CE6CC195DFDFA000935E7 /* GVGButton.m */,
 				50412A23195F833900F3B126 /* GVGCardButton.h */,
 				50412A24195F833900F3B126 /* GVGCardButton.m */,
+				506084CC1961CD9B0015F177 /* GVGTutorialView.h */,
+				506084CD1961CD9B0015F177 /* GVGTutorialView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -169,6 +177,7 @@
 				500E5565195E5715002B590E /* Categories */,
 				50412A03195E34B600F3B126 /* Models */,
 				504129FF195E26CD00F3B126 /* View Controllers */,
+				506084CB1961CCF50015F177 /* Protocol */,
 				501CE6C8195DF304000935E7 /* GVGLinkedInWrapper.h */,
 				501CE6C9195DF304000935E7 /* GVGLinkedInWrapper.m */,
 				501CE6CE195DFDFE000935E7 /* UI */,
@@ -202,6 +211,23 @@
 				505D7595195DD7AB002B1403 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		506084CB1961CCF50015F177 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				506084CA1961CCF00015F177 /* GVGModalViewDelegate.h */,
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
+		506084D11961CDDB0015F177 /* Nib */ = {
+			isa = PBXGroup;
+			children = (
+				50412A261960856300F3B126 /* MatchingView.xib */,
+				506084CF1961CDD30015F177 /* TutorialView.xib */,
+			);
+			name = Nib;
 			sourceTree = "<group>";
 		};
 		7B2C8A7AEC4D41D4A23F8974 /* Frameworks */ = {
@@ -294,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505D758B195DD7AB002B1403 /* Images.xcassets in Resources */,
+				506084D01961CDD30015F177 /* TutorialView.xib in Resources */,
 				50412A271960856300F3B126 /* MatchingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,6 +385,7 @@
 				50412A25195F833900F3B126 /* GVGCardButton.m in Sources */,
 				505D7586195DD7AB002B1403 /* main.m in Sources */,
 				500E5564195E5712002B590E /* NSArray+RandomSample.m in Sources */,
+				506084CE1961CD9B0015F177 /* GVGTutorialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

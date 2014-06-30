@@ -13,27 +13,37 @@
 #import "GVGCardButton.h"
 #import "GVGCardGridView.h"
 #import "UIView+Fade.h"
+#import "GVGTutorialView.h"
 
 @interface GVGMatchingViewController () <UIAlertViewDelegate, GVGCardGridDelegate>
 
+// Holds all persons form which random six are pulled
 @property (nonatomic, strong) NSArray *persons;
 
+// Label holding the current score
 @property (nonatomic, strong) IBOutlet UILabel *scoreLabel;
 
+// The label for the word "Score" - to be faded in/out
 @property (nonatomic, strong) IBOutlet UILabel *scoreWordLabel;
 
+// Loading spinner
 @property (nonatomic, strong) PCLoadingView *loadingView;
+
+// Feedback for what is being loaded
 @property (nonatomic, strong) UILabel *loadingLabel;
 
+// Holds first card user selects in a given pair
 @property (nonatomic, strong) GVGCardButton *cardToMatch;
 
 @end
 
+// Enum for alert view tag
 typedef enum : NSUInteger {
     AVTNotEnoughConnections
 } GVGAlertViewType;
 
 @implementation GVGMatchingViewController
+@synthesize modalView;
 
 - (id)init
 {
@@ -43,9 +53,6 @@ typedef enum : NSUInteger {
         // Set initial score and label
         _score = 0;
         self.scoreLabel.text = @"0";
-
-        // Card grid should delegate to self
-        self.cardGridView.delegate = self;
 
         // Begin loading persons
         [self loadPersons];
@@ -93,7 +100,10 @@ typedef enum : NSUInteger {
 
 - (void)populatePeopleCards
 {
-    // Init cards grid view
+    // Card grid should delegate to self
+    self.cardGridView.delegate = self;
+
+    // Populate card grid with six random persons
     self.cardGridView.persons = [self.persons randomSample:6];
 }
 
@@ -270,9 +280,9 @@ typedef enum : NSUInteger {
     }
 }
 
-
 - (void)didMakeMatch:(Person *)person
 {
+    [self presentModalView:[GVGTutorialView new]];
     // Increase score by 2 points each time
     self.score += 2;
 
@@ -296,6 +306,17 @@ typedef enum : NSUInteger {
 - (void)didMismatch
 {
     NSLog(@"NO MATCH");
+}
+
+- (void)presentModalView:(UIView<GVGModalViewDelegate> *)view
+{
+    self.modalView = view;
+    [self.view addSubview:self.modalView];
+}
+
+- (void)dismissModalView
+{
+    [self.modalView removeFromSuperview];
 }
 
 - (BOOL)prefersStatusBarHidden
