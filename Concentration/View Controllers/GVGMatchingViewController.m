@@ -25,8 +25,7 @@
 @property (nonatomic, strong) PCLoadingView *loadingView;
 @property (nonatomic, strong) UILabel *loadingLabel;
 
-@property (nonatomic) NSInteger currentScore;
-
+@property (nonatomic, strong) GVGCardButton *cardToMatch;
 
 @end
 
@@ -40,6 +39,13 @@ typedef enum : NSUInteger {
 {
     self = [super initWithNibName:@"MatchingView" bundle:[NSBundle mainBundle]];
     if (self) {
+
+        // Set initial score and label
+        _score = 0;
+        self.scoreLabel.text = @"0";
+
+        // Card grid should delegate to self
+        self.cardGridView.delegate = self;
 
         // Begin loading persons
         [self loadPersons];
@@ -66,6 +72,7 @@ typedef enum : NSUInteger {
             // We have at least six, set to self.persons
             self.persons = persons;
 
+            // Populate card
             [self populatePeopleCards];
 
         } else {
@@ -87,7 +94,6 @@ typedef enum : NSUInteger {
 - (void)populatePeopleCards
 {
     // Init cards grid view
-    self.cardGridView.delegate = self;
     self.cardGridView.persons = [self.persons randomSample:6];
 }
 
@@ -127,6 +133,40 @@ typedef enum : NSUInteger {
 
 }
 
+- (void)setScore:(int)score
+{
+    _score = score;
+
+    // Score label should shrink first
+    POPSpringAnimation *scoreFirstShrinkAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scoreFirstShrinkAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+    scoreFirstShrinkAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0.7, 0.7)];
+
+    // Upon shrink completion, set text and begin to grow
+    scoreFirstShrinkAnimation.completionBlock = ^(POPAnimation *animation, BOOL completed) {
+        self.scoreLabel.text = [NSString stringWithFormat:@"%i", score];
+
+        POPSpringAnimation *scoreGrowAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+        scoreGrowAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(0.7, 0.7)];
+        scoreGrowAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1.8, 1.8)];
+
+        // Upon grow completion, begin shrinking back to resting size
+        scoreGrowAnimation.completionBlock = ^(POPAnimation *animation, BOOL completed) {
+
+            POPSpringAnimation *scoreRestingShrinkAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+            scoreRestingShrinkAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(1.8, 1.8)];
+            scoreRestingShrinkAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+
+            [self.scoreLabel.layer pop_addAnimation:scoreRestingShrinkAnimation forKey:@"scoreLabel.scale"];
+        };
+
+        [self.scoreLabel.layer pop_addAnimation:scoreGrowAnimation forKey:@"scoreLabel.scale"];
+
+    };
+
+    [self.scoreLabel.layer pop_addAnimation:scoreFirstShrinkAnimation forKey:@"scoreLabel.scale"];
+}
+
 #pragma mark GVGCardGridDelegate
 
 - (void)cardsWillAppear
@@ -150,6 +190,112 @@ typedef enum : NSUInteger {
 
     // Fade out loading view
     [self.loadingView fadeOut];
+}
+
+- (void)didFlipCard:(GVGCardButton *)card
+{
+    // We only care if it's face up
+    switch (card.flippedState) {
+        case GVGFlippedStateFaceUp: {
+
+            // Check if there is a card already flipped (needs match)
+            if (self.cardToMatch) {
+
+                // Two cards flipped, no longer safe to flip
+                self.cardGridView.safeToFlip = NO;
+
+                // Check if cards are
+                [self attemptMatch:card];
+
+            } else {
+
+                // No card to match
+                // Safe to flip another
+                self.cardGridView.safeToFlip = YES;
+
+                // Set card to match
+                self.cardToMatch = card;
+            }
+
+            break;
+        }
+    }
+}
+
+- (void)attemptMatch:(GVGCardButton *)card
+{
+    // Pointer to first card picked
+    GVGCardButton *cardToMatch = self.cardToMatch;
+d
+    // Set card to match property to nil in prep for next draw
+    self.cardToMatch = nil;
+
+    // Check if it's a match
+    if (card.person.name == cardToMatch.person.name) {
+
+        // Safe to flip again
+        self.cardGridView.safeToFlip = YES;
+
+        // Show cards for a sec
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            // Fade cards out after a second
+            [cardToMatch fadeOut];
+            [card fadeOut];
+
+            // Call did match handler
+            [self didMakeMatch:self.cardToMatch.person];
+
+        });
+
+    } else {
+
+        // No match made
+        self.cardGridView.safeToFlip = YES;
+
+        // Call mismatch handler
+        [self didMismatch];
+
+        // Show cards for a sec
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            // Bounce cards back to resting pos
+            [card bounceToScale:CGPointMake(1, 1) completion:nil];
+            [cardToMatch bounceToScale:CGPointMake(1, 1) completion:nil];
+
+            // Flip cards back over
+            [self.cardGridView flipCards:@[cardToMatch, card]];
+
+        });
+    }
+}
+
+
+- (void)didMakeMatch:(Person *)person
+{
+    // Increase score by 2 points each time
+    self.score += 2;
+
+    // Check if winning score
+    if (self.score == 12) {
+
+        // All matches made, game is over
+        UIAlertView *congrats = [[UIAlertView alloc] initWithTitle:@"Congratulations!" message:@"You made all the matches. Nice work!" delegate:nil cancelButtonTitle:@"Woohoo!" otherButtonTitles:nil];
+
+        // Repopulate people cards
+        [self populatePeopleCards];
+
+        // Reset score
+        self.score = 0;
+
+        // Show alert
+        [congrats show];
+    }
+}
+
+- (void)didMismatch
+{
+    NSLog(@"NO MATCH");
 }
 
 - (BOOL)prefersStatusBarHidden

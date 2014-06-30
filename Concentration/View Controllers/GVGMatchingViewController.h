@@ -17,7 +17,7 @@
 @property (nonatomic, strong) IBOutlet UIView *view;
 
 // Holds current score, setScore updates private property scoreLabel
-@property (nonatomic) NSInteger *score;
+@property (nonatomic) int score;
 
 // View containing grid of cards
 @property (nonatomic, strong) IBOutlet GVGCardGridView *cardGridView;
