@@ -74,9 +74,7 @@
 - (void)signOut
 {
     // Check if delegate has signout, call it
-    if ([self.delegate respondsToSelector:@selector(signOut)]) {
-        [self.delegate performSelector:@selector(signOut)];
-    }
+    [self.delegate signOut];
 }
 
 @end

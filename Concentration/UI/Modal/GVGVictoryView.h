@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GVGModalViewDelegate.h"
 
-@interface GVGVictoryView : UIView
+@interface GVGVictoryView : UIView <GVGModalView>
 
 @property (nonatomic, strong) id<GVGModalViewDelegate> delegate;
 

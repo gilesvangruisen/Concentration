@@ -77,10 +77,12 @@ typedef enum : NSUInteger {
             if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
 
                 // Pop in tutorial view
-                [self presentModalView:[GVGTutorialView new]];
+                GVGTutorialView *tutorialView = [GVGTutorialView new];
+                tutorialView.delegate = self;
+                [self presentModalView:tutorialView];
 
                 // Mark seenTutorial true in user defaults
-//                [[NSUserDefaults standardUserDefaults] setValue:@"true" forKeyPath:@"seenTutorial"];
+                [[NSUserDefaults standardUserDefaults] setValue:@"true" forKeyPath:@"seenTutorial"];
             }
 
             // Populate card
@@ -300,15 +302,16 @@ typedef enum : NSUInteger {
 
         // All matches made, game is over
         GVGVictoryView *victoryView = [GVGVictoryView new];
+        victoryView.delegate = self;
         [self presentModalView:victoryView];
-
-        // Repopulate people cards
-        [self populatePeopleCards];
-
-        // Reset score
-        self.score = 0;
-
     }
+}
+
+- (void)signOut
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"accessToken"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"authorizationCode"];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didMismatch
@@ -339,6 +342,18 @@ typedef enum : NSUInteger {
 
 - (void)dismissModalView
 {
+
+    // Reset game if we're dismissing from victory modal
+    if (self.modalView.class == [GVGVictoryView class]) {
+
+        // Repopulate people cards
+        [self populatePeopleCards];
+
+        /// Reset score
+        _score = 0;
+        self.scoreLabel.text = @"0";
+    }
+
     // Animation to shrink modal as it fades out
     POPSpringAnimation *leaveShrinkAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
     leaveShrinkAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];

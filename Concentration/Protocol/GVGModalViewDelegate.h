@@ -19,4 +19,12 @@
 // Call on delegate to dismiss the view
 - (void)dismissModalView;
 
+- (void)signOut;
+
+@end
+
+@protocol GVGModalView <NSObject>
+
+@property (nonatomic, strong) id<GVGModalViewDelegate> delegate;
+
 @end
