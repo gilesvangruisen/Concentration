@@ -57,13 +57,6 @@ typedef enum : NSUInteger {
         // Begin loading persons
         [self loadPersons];
 
-        // Check if user has seen tutorial, display tutorial view if not
-        if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
-
-            // Pop in tutorial view
-
-        }
-
     }
     return self;
 }
@@ -78,6 +71,16 @@ typedef enum : NSUInteger {
 
             // We have at least six, set to self.persons
             self.persons = persons;
+
+            // Check if user has seen tutorial, display tutorial view if not
+            if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
+
+                // Pop in tutorial view
+                [self presentModalView:[GVGTutorialView new]];
+
+                // Mark seenTutorial true in user defaults
+                [[NSUserDefaults standardUserDefaults] setValue:@"true" forKeyPath:@"seenTutorial"];
+            }
 
             // Populate card
             [self populatePeopleCards];
@@ -131,11 +134,15 @@ typedef enum : NSUInteger {
 
     self.loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 2) - 100, (self.view.frame.size.height / 2) + 20, 200, 20)];
 
+    // Feedback that we're loading user's connecitons
     self.loadingLabel.text = @"Loading Connections";
+
+    // Style loading label
     self.loadingLabel.textAlignment = NSTextAlignmentCenter;
     self.loadingLabel.textColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
     self.loadingLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f];
 
+    // Add loading label as subview
     [self.view addSubview:self.loadingLabel];
 
     // Add loading view as subview
@@ -154,6 +161,8 @@ typedef enum : NSUInteger {
 
     // Upon shrink completion, set text and begin to grow
     scoreFirstShrinkAnimation.completionBlock = ^(POPAnimation *animation, BOOL completed) {
+
+        // Set score label text
         self.scoreLabel.text = [NSString stringWithFormat:@"%i", score];
 
         POPSpringAnimation *scoreGrowAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
@@ -282,7 +291,6 @@ typedef enum : NSUInteger {
 
 - (void)didMakeMatch:(Person *)person
 {
-    [self presentModalView:[GVGTutorialView new]];
     // Increase score by 2 points each time
     self.score += 2;
 
@@ -310,13 +318,45 @@ typedef enum : NSUInteger {
 
 - (void)presentModalView:(UIView<GVGModalViewDelegate> *)view
 {
+    // Set modal view
     self.modalView = view;
+
+    // Start at opacity 0 when adding as subview
+    self.modalView.layer.opacity = 0;
+
+    // Modals should have round corners, shadow
+    self.modalView.layer.cornerRadius = 6.0f;
+    self.modalView.layer.shadowRadius = 2.0f;
+    self.modalView.layer.shadowOpacity = 0.25f;
+    self.modalView.layer.shadowOffset = CGSizeMake(0, 0);
+    self.modalView.layer.shadowColor = [UIColor blackColor].CGColor;
+
+    // Add modalView as subview
     [self.view addSubview:self.modalView];
+
+    POPSpringAnimation *enterGrowAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    enterGrowAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(1.1, 1.1)];
+    enterGrowAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+    [self.modalView.layer pop_addAnimation:enterGrowAnimation forKey:@"modalView.scale"];
+    [self.modalView fadeIn];
 }
 
 - (void)dismissModalView
 {
-    [self.modalView removeFromSuperview];
+    // Animation to shrink modal as it fades out
+    POPSpringAnimation *leaveShrinkAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    leaveShrinkAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+    leaveShrinkAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0.9, 0.9)];
+
+    // Upon completing the shrink, remove the modal altogether
+    leaveShrinkAnimation.completionBlock = ^(POPAnimation *animation, BOOL completed) {
+        [self.modalView removeFromSuperview];
+        self.modalView = nil;
+    };
+
+    // Add shrink animation, fade out
+    [self.modalView.layer pop_addAnimation:leaveShrinkAnimation forKey:@"modalView.scale"];
+    [self.modalView fadeOut];
 }
 
 - (BOOL)prefersStatusBarHidden
