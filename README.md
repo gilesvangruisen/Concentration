@@ -18,7 +18,9 @@ Install dependencies
 ```
 pod install
 ```
-
+Now open the workspace project
+```
 Open Concentration.xcworkspace
+```
 
 This should run fine in simulator but you'll likely have to change bundle identifier and/or provisioning profiles to run on device.
