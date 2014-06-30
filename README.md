@@ -8,6 +8,7 @@ A game of connections and networking
 Clone repo
 ```
 git clone git@github.com:gilesvangruisen/Concentration.git
+cd Concentration
 ```
 Make sure cocoapods is installed. If not do:
 ```
