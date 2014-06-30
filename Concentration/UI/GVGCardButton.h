@@ -12,7 +12,7 @@
 
 typedef enum : NSUInteger {
     GVGFlippedStateFaceDown,
-    GVGFlippedtateFaceUp
+    GVGFlippedStateFaceUp
 } GVGFlippedState;
 
 typedef enum : NSUInteger {
