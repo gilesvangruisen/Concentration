@@ -12,12 +12,15 @@
 #import "NSArray+RandomSample.h"
 #import "GVGCardButton.h"
 #import "GVGCardGridView.h"
+#import "UIView+Fade.h"
 
 @interface GVGMatchingViewController () <UIAlertViewDelegate, GVGCardGridDelegate>
 
 @property (nonatomic, strong) NSArray *persons;
 
 @property (nonatomic, strong) IBOutlet UILabel *scoreLabel;
+
+@property (nonatomic, strong) IBOutlet UILabel *scoreWordLabel;
 
 @property (nonatomic, strong) PCLoadingView *loadingView;
 @property (nonatomic, strong) UILabel *loadingLabel;
@@ -84,8 +87,8 @@ typedef enum : NSUInteger {
 - (void)populatePeopleCards
 {
     // Init cards grid view
-    self.cardGridView.persons = [self.persons randomSample:6];
     self.cardGridView.delegate = self;
+    self.cardGridView.persons = [self.persons randomSample:6];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -124,10 +127,29 @@ typedef enum : NSUInteger {
 
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark GVGCardGridDelegate
+
+- (void)cardsWillAppear
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Fade out animation
+    POPBasicAnimation *basicFadeOutAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
+    basicFadeOutAnimation.fromValue = @(1);
+    basicFadeOutAnimation.toValue = @(0);
+
+    // Fade in animation
+    POPBasicAnimation *basicFadeInAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
+    basicFadeInAnimation.fromValue = @(0);
+    basicFadeInAnimation.toValue = @(1);
+
+    // Fade in score and score word labels
+    [self.scoreLabel fadeIn];
+    [self.scoreWordLabel fadeIn];
+
+    // Fade out loading text
+    [self.loadingLabel fadeOut];
+
+    // Fade out loading view
+    [self.loadingView fadeOut];
 }
 
 - (BOOL)prefersStatusBarHidden
