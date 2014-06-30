@@ -22,6 +22,9 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
 
+        // Set initial opacity
+        self.layer.opacity = 0.5;
+
         // Initial state is flipped with face down
         self.flippedState = GVGFlippedStateFaceDown;
 
@@ -41,18 +44,27 @@
 
 - (void)touchDown
 {
+    [self fadeTo:1.0];
+
     // Shrink with spring animation
     [self bounceToScale:CGPointMake(0.8, 0.8) completion:nil];
 }
 
 - (void)touchUpInside
 {
-    // User completed a tap inside, flip the card
-    [self flip];
+    // Check if card is already face up
+    if (self.flippedState != GVGFlippedStateFaceUp) {
+
+        // Card is not face up, flip it
+        [self flip];
+
+    }
 
     // Grow card then spring back to resting position
-    [self bounceToScale:CGPointMake(1.2, 1.2) completion:^(POPAnimation *animation, BOOL completed) {
-        [self bounceToScale:CGPointMake(1, 1) completion:nil];
+    [self bounceToScale:CGPointMake(1.1, 1.1) completion:^(POPAnimation *animation, BOOL completed) {
+        if ([self.delegate safeToFlip]) {
+            [self bounceToScale:CGPointMake(1, 1) completion:nil];
+        }
     }];
 }
 
@@ -63,18 +75,59 @@
 
 - (void)flip
 {
+    // Check which way to flip
     switch (self.flippedState) {
+
         case GVGFlippedStateFaceDown: {
-            self.flippedState = GVGFlippedStateFaceUp;
-            [self.faceUpView fadeIn];
+
+            // Card is face down, check if we're allowed to flip
+            if ([self.delegate safeToFlip]) {
+
+                // Card is allowed to flip, change state
+                self.flippedState = GVGFlippedStateFaceUp;
+
+            }
 
             break;
         }
 
         case GVGFlippedStateFaceUp: {
 
+            // Card is face up, change state
             self.flippedState = GVGFlippedStateFaceDown;
+
+            break;
+        }
+    }
+
+    // Call didFlipCard on delegate if implemented
+    if ([self.delegate respondsToSelector:@selector(didFlipCard:)]) {
+        [self.delegate didFlipCard:self];
+    }
+}
+
+- (void)setFlippedState:(NSUInteger)flippedState
+{
+    _flippedState = flippedState;
+
+    // Switch over new flipped state
+    switch (_flippedState) {
+
+        case GVGFlippedStateFaceUp: {
+
+                // Fade in face up view
+                [self.faceUpView fadeIn];
+
+            break;
+        }
+
+        case GVGFlippedStateFaceDown: {
+
+            // Fade out face up view
             [self.faceUpView fadeOut];
+
+            // Fade card to 50%
+            [self fadeTo:0.5];
 
             break;
         }
@@ -84,6 +137,10 @@
 - (void)setPerson:(Person *)person
 {
     _person = person;
+
+    // Remove face down/up views
+    [self.faceDownView removeFromSuperview];
+    [self.faceUpView removeFromSuperview];
 
     // Set background image
     UIImageView *faceDownView = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -132,6 +189,7 @@
         }
     }
 
+    // Add face down/up as subviews
     [self addSubview:self.faceDownView];
     [self addSubview:self.faceUpView];
 }
