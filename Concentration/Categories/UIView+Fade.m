@@ -13,18 +13,12 @@
 
 - (void)fadeIn
 {
-    POPBasicAnimation *fadeInAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
-    fadeInAnimation.fromValue = @(0);
-    fadeInAnimation.toValue = @(1);
-    [self.layer pop_addAnimation:fadeInAnimation forKey:@"layer.fadein"];
+    [self fadeTo:1];
 }
 
 - (void)fadeOut
 {
-    POPBasicAnimation *fadeOutAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
-    fadeOutAnimation.fromValue = @(1);
-    fadeOutAnimation.toValue = @(0);
-    [self.layer pop_addAnimation:fadeOutAnimation forKey:@"layer.fadeout"];
+    [self fadeTo:0];
 }
 
 - (void)fadeTo:(CGFloat)toValue
