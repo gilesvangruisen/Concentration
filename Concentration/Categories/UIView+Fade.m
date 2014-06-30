@@ -27,4 +27,12 @@
     [self.layer pop_addAnimation:fadeOutAnimation forKey:@"layer.fadeout"];
 }
 
+- (void)fadeTo:(CGFloat)toValue
+{
+    POPBasicAnimation *fadeToAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
+    fadeToAnimation.fromValue = @(self.layer.opacity);
+    fadeToAnimation.toValue = @(toValue);
+    [self.layer pop_addAnimation:fadeToAnimation forKey:@"fadeTo"];
+}
+
 @end

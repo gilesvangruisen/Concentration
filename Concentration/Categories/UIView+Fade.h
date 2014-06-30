@@ -14,4 +14,6 @@
 
 - (void)fadeOut;
 
+- (void)fadeTo:(CGFloat)toValue;
+
 @end
