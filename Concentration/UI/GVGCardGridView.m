@@ -62,21 +62,27 @@
         GVGCardButton *nameCard = [cardsToPopulate lastObject];
         [cardsToPopulate removeLastObject];
 
-        // Populate card with current person
-        nameCard.person = person;
-
         // Card is to be used as name
         nameCard.type = GVGCardTypeName;
+
+        // Populate card with current person
+        nameCard.person = person;
 
         // Pop last object off temp cards
         GVGCardButton *faceCard = [cardsToPopulate lastObject];
         [cardsToPopulate removeLastObject];
 
+        // Card is picture card
+        faceCard.type = GVGCardTypePicture;
+
         // Populate card with current person
         faceCard.person = person;
 
-        // Card is picture card
-        faceCard.type = GVGCardTypePicture;
+    }
+
+    // Check if delegate implements cardsWillView and call it if so
+    if ([self.delegate respondsToSelector:@selector(cardsWillAppear)]) {
+        [self.delegate cardsWillAppear];
     }
 
     // Cards loaded, fade in

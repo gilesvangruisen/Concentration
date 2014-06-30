@@ -36,8 +36,11 @@
 
 @end
 
-// Protocol
+// Delegate protocol
 @protocol GVGCardGridDelegate <NSObject>
+
+// Called when persons are loaded and about to fade in
+- (void)cardsWillAppear;
 
 // Called when a user selects a card
 - (void)didSelectCardAtIndex:(NSInteger)index;
