@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class GVGCardButton;
+@class GVGCardGridView;
+
 @interface GVGMatchingViewController : UIViewController
+
+// IBOutlet property to connect view to nib
+@property (nonatomic, strong) IBOutlet UIView *view;
+
+// Holds current score, setScore updates private property scoreLabel
+@property (nonatomic) NSInteger *score;
+
+// View containing grid of cards
+@property (nonatomic, strong) IBOutlet GVGCardGridView *cardGridView;
 
 @end

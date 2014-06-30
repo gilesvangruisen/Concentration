@@ -18,16 +18,13 @@
 
 @implementation GVGCardGridView
 
-- (id)init
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
+    self = [super initWithCoder:aDecoder];
     if (self) {
 
         // Initially set opacity to 0
         self.layer.opacity = 0;
-
-        // Init mutably array containing all card buttons
-        self.cards = @[self.card0, self.card1, self.card2, self.card3, self.card4, self.card5, self.card6, self.card7, self.card8, self.card9, self.card10, self.card11];
 
     }
     return self;
@@ -36,15 +33,21 @@
 
 - (void)fadeInCards
 {
+    // Basic opacity enter animation
     POPBasicAnimation *opacityAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
     opacityAnimation.fromValue = @(0);
     opacityAnimation.toValue = @(1);
+
+    // Add animation
     [self.layer pop_addAnimation:opacityAnimation forKey:@"cardGrid.opacity"];
 }
 
 - (void)setPersons:(NSArray *)persons
 {
     _persons = persons; // Six persons
+
+    // Set cards array
+    self.cards = @[self.card0, self.card1, self.card2, self.card3, self.card4, self.card5, self.card6, self.card7, self.card8, self.card9, self.card10, self.card11];
 
     // Init temporary mutable copy of cards to be shuffled and populated
     NSMutableArray *cardsToPopulate = [self.cards mutableCopy];
@@ -76,6 +79,7 @@
         faceCard.type = GVGCardTypePicture;
     }
 
+    // Cards loaded, fade in
     [self fadeInCards];
 }
 

@@ -16,29 +16,24 @@
 
 @implementation GVGCardButton
 
-#define CARD_OFFSET_Y = 0
-
-
-- (id)initWithPerson:(Person *)person index:(NSInteger)index
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        
-        self.index = index;
-        
+
         // Initial state is flipped with face down
         self.flippedState = GVGFlippedStateFaceDown;
-
-        // Set self.person to person passed with init
-        self.person = person;
 
         // Add subviews in order: faceUp at botom, faceDown above
         [self addSubview:self.faceUpView];
         [self addSubview:self.faceDownView];
-        
-        [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchDown];
-        [self addTarget:self action:@selector(touchUpOutside) forControlEvents:UIControlEventTouchUpOutside];
 
+        // Add touch down target
+        [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchDown];
+
+        // Add touch up targets
+        [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpOutside];
+        [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -46,30 +41,19 @@
 - (void)touchDown
 {
     POPSpringAnimation *scaleSpringAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
-    scaleSpringAnimation.fromValue = @(1);
-    scaleSpringAnimation.toValue = @(0.8);
+    scaleSpringAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0.9, 0.9)];
+    scaleSpringAnimation.springSpeed = 18.;
+    scaleSpringAnimation.springBounciness = 18.;
     [self.layer pop_addAnimation:scaleSpringAnimation forKey:@"card.scale"];
 }
 
-- (void)touchUpOutside
+- (void)touchUp
 {
-    
-}
-
-- (void)flipCard
-{
-    // Check card state to determine animation
-    switch (self.flippedState) {
-        case GVGFlippedStateFaceDown:
-
-            // Flip and fade out
-
-            break;
-            
-        case GVGFlippedtateFaceUp:
-            
-            break;
-    }
+    POPSpringAnimation *scaleSpringAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleSpringAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+    scaleSpringAnimation.springSpeed = 18.;
+    scaleSpringAnimation.springBounciness = 18.;
+    [self.layer pop_addAnimation:scaleSpringAnimation forKey:@"card.scale"];
 }
 
 - (void)layoutSubviews

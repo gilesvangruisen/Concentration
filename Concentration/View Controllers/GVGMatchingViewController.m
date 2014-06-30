@@ -10,10 +10,14 @@
 #import "Person.h"
 #import "PCLoadingView.h"
 #import "NSArray+RandomSample.h"
+#import "GVGCardButton.h"
+#import "GVGCardGridView.h"
 
-@interface GVGMatchingViewController () <UIAlertViewDelegate>
+@interface GVGMatchingViewController () <UIAlertViewDelegate, GVGCardGridDelegate>
 
 @property (nonatomic, strong) NSArray *persons;
+
+@property (nonatomic, strong) IBOutlet UILabel *scoreLabel;
 
 @property (nonatomic, strong) PCLoadingView *loadingView;
 @property (nonatomic, strong) UILabel *loadingLabel;
@@ -29,17 +33,21 @@ typedef enum : NSUInteger {
 
 @implementation GVGMatchingViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"MatchingView" bundle:[NSBundle mainBundle]];
     if (self) {
+
         // Begin loading persons
         [self loadPersons];
 
         // Check if user has seen tutorial, display tutorial view if not
         if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
+
             // Pop in tutorial view
+
         }
+
     }
     return self;
 }
@@ -75,9 +83,9 @@ typedef enum : NSUInteger {
 
 - (void)populatePeopleCards
 {
-    // Init cards table with six random people, add to view
-    // fade out loading
-    // fade in cards table, scores
+    // Init cards grid view
+    self.cardGridView.persons = [self.persons randomSample:6];
+    self.cardGridView.delegate = self;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -99,15 +107,6 @@ typedef enum : NSUInteger {
 {
     [super viewDidLoad];
 
-    // Instantiate image view with same frame as view, to hold background image
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-
-    // Set image of background view to greyed shattered pattern
-    backgroundImageView.image = [UIImage imageNamed:@"MatchingBackground"];
-
-    // Add background image view as subview
-    [self.view addSubview:backgroundImageView];
-
     // Initialize loading view (80x80 centered)
     self.loadingView = [[PCLoadingView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 2) - 20, (self.view.frame.size.height / 2) - 40, 40, 40)];
 
@@ -122,6 +121,7 @@ typedef enum : NSUInteger {
 
     // Add loading view as subview
     [self.view addSubview:self.loadingView];
+
 }
 
 - (void)didReceiveMemoryWarning

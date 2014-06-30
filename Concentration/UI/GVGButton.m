@@ -7,6 +7,7 @@
 //
 
 #import "GVGButton.h"
+#import <pop/POP.h>
 
 @implementation GVGButton
 
@@ -21,8 +22,32 @@
         self.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f];
         [self setTitleColor:[UIColor colorWithWhite:0.0f alpha:0.8f] forState:UIControlStateNormal];
 
+        // Add touch down target
+        [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchDown];
+        
+        // Add touch up targets
+        [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpOutside];
+        [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void)touchDown
+{
+    POPSpringAnimation *scaleSpringAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleSpringAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0.9, 0.9)];
+    scaleSpringAnimation.springSpeed = 18.;
+    scaleSpringAnimation.springBounciness = 18.;
+    [self.layer pop_addAnimation:scaleSpringAnimation forKey:@"card.scale"];
+}
+
+- (void)touchUp
+{
+    POPSpringAnimation *scaleSpringAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleSpringAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+    scaleSpringAnimation.springSpeed = 18.;
+    scaleSpringAnimation.springBounciness = 18.;
+    [self.layer pop_addAnimation:scaleSpringAnimation forKey:@"card.scale"];
 }
 
 @end

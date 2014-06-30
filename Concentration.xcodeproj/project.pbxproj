@@ -13,12 +13,15 @@
 		501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CE6CC195DFDFA000935E7 /* GVGButton.m */; };
 		504129FE195E26C400F3B126 /* GVGMatchingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 504129FD195E26C400F3B126 /* GVGMatchingViewController.m */; };
 		50412A02195E34AF00F3B126 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A01195E34AF00F3B126 /* Person.m */; };
-		50412A1C195F6CB400F3B126 /* GVGCardsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A1B195F6CB400F3B126 /* GVGCardsTable.m */; };
 		50412A1F195F6CCB00F3B126 /* PCLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A1E195F6CCB00F3B126 /* PCLoadingView.m */; };
+		50412A25195F833900F3B126 /* GVGCardButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A24195F833900F3B126 /* GVGCardButton.m */; };
+		50412A271960856300F3B126 /* MatchingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50412A261960856300F3B126 /* MatchingView.xib */; };
+		50412A31196091FC00F3B126 /* GVGCardGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50412A30196091FC00F3B126 /* GVGCardGridView.m */; };
 		505D7586195DD7AB002B1403 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7585195DD7AB002B1403 /* main.m */; };
 		505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7588195DD7AB002B1403 /* AppDelegate.m */; };
 		505D758B195DD7AB002B1403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505D758A195DD7AB002B1403 /* Images.xcassets */; };
 		505D7597195DD7AB002B1403 /* ConcentrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 505D7596195DD7AB002B1403 /* ConcentrationTests.m */; };
+		50966FDF19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */; };
 		998F971794B34314BFA695E5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED43B57793884F1E99018E47 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -46,10 +49,13 @@
 		504129FD195E26C400F3B126 /* GVGMatchingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGMatchingViewController.m; path = "View Controllers/GVGMatchingViewController.m"; sourceTree = "<group>"; };
 		50412A00195E34AF00F3B126 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Models/Person.h; sourceTree = "<group>"; };
 		50412A01195E34AF00F3B126 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Models/Person.m; sourceTree = "<group>"; };
-		50412A1A195F6CB400F3B126 /* GVGCardsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGCardsTable.h; path = UI/GVGCardsTable.h; sourceTree = "<group>"; };
-		50412A1B195F6CB400F3B126 /* GVGCardsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGCardsTable.m; path = UI/GVGCardsTable.m; sourceTree = "<group>"; };
 		50412A1D195F6CCB00F3B126 /* PCLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCLoadingView.h; path = UI/PCLoadingView.h; sourceTree = "<group>"; };
 		50412A1E195F6CCB00F3B126 /* PCLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCLoadingView.m; path = UI/PCLoadingView.m; sourceTree = "<group>"; };
+		50412A23195F833900F3B126 /* GVGCardButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGCardButton.h; path = UI/GVGCardButton.h; sourceTree = "<group>"; };
+		50412A24195F833900F3B126 /* GVGCardButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGCardButton.m; path = UI/GVGCardButton.m; sourceTree = "<group>"; };
+		50412A261960856300F3B126 /* MatchingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchingView.xib; path = UI/MatchingView.xib; sourceTree = "<group>"; };
+		50412A2F196091FC00F3B126 /* GVGCardGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GVGCardGridView.h; path = UI/GVGCardGridView.h; sourceTree = "<group>"; };
+		50412A30196091FC00F3B126 /* GVGCardGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GVGCardGridView.m; path = UI/GVGCardGridView.m; sourceTree = "<group>"; };
 		505D7580195DD7AB002B1403 /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505D7584195DD7AB002B1403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505D7585195DD7AB002B1403 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -59,6 +65,8 @@
 		505D7590195DD7AB002B1403 /* ConcentrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcentrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		505D7595195DD7AB002B1403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505D7596195DD7AB002B1403 /* ConcentrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConcentrationTests.m; sourceTree = "<group>"; };
+		50966FDD19609C8F00E7C699 /* NSMutableArray+RandomShuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+RandomShuffle.h"; path = "Categories/NSMutableArray+RandomShuffle.h"; sourceTree = "<group>"; };
+		50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+RandomShuffle.m"; path = "Categories/NSMutableArray+RandomShuffle.m"; sourceTree = "<group>"; };
 		ED43B57793884F1E99018E47 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -86,6 +94,8 @@
 			children = (
 				500E5562195E5712002B590E /* NSArray+RandomSample.h */,
 				500E5563195E5712002B590E /* NSArray+RandomSample.m */,
+				50966FDD19609C8F00E7C699 /* NSMutableArray+RandomShuffle.h */,
+				50966FDE19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -93,12 +103,15 @@
 		501CE6CE195DFDFE000935E7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				50412A1A195F6CB400F3B126 /* GVGCardsTable.h */,
-				50412A1B195F6CB400F3B126 /* GVGCardsTable.m */,
+				50412A261960856300F3B126 /* MatchingView.xib */,
+				50412A2F196091FC00F3B126 /* GVGCardGridView.h */,
+				50412A30196091FC00F3B126 /* GVGCardGridView.m */,
 				50412A1D195F6CCB00F3B126 /* PCLoadingView.h */,
 				50412A1E195F6CCB00F3B126 /* PCLoadingView.m */,
 				501CE6CB195DFDFA000935E7 /* GVGButton.h */,
 				501CE6CC195DFDFA000935E7 /* GVGButton.m */,
+				50412A23195F833900F3B126 /* GVGCardButton.h */,
+				50412A24195F833900F3B126 /* GVGCardButton.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -276,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505D758B195DD7AB002B1403 /* Images.xcassets in Resources */,
+				50412A271960856300F3B126 /* MatchingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,11 +345,13 @@
 				50412A1F195F6CCB00F3B126 /* PCLoadingView.m in Sources */,
 				50412A02195E34AF00F3B126 /* Person.m in Sources */,
 				505D7589195DD7AB002B1403 /* AppDelegate.m in Sources */,
+				50966FDF19609C8F00E7C699 /* NSMutableArray+RandomShuffle.m in Sources */,
+				50412A31196091FC00F3B126 /* GVGCardGridView.m in Sources */,
 				501CE6CD195DFDFA000935E7 /* GVGButton.m in Sources */,
 				501CE6CA195DF304000935E7 /* GVGLinkedInWrapper.m in Sources */,
+				50412A25195F833900F3B126 /* GVGCardButton.m in Sources */,
 				505D7586195DD7AB002B1403 /* main.m in Sources */,
 				500E5564195E5712002B590E /* NSArray+RandomSample.m in Sources */,
-				50412A1C195F6CB400F3B126 /* GVGCardsTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

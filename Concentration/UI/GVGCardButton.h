@@ -37,10 +37,4 @@ typedef enum : NSUInteger {
 // "Front" or "face" of the card, i.e. showing name or picture
 @property (nonatomic, strong) UIView *faceUpView;
 
-// Zero-based index of the card (0-11)
-@property (nonatomic) NSInteger index;
-
-// Returns initialized card, populated with person and index
-- (id)initWithPerson:(Person *)person index:(NSInteger)index;
-
 @end
