@@ -226,7 +226,7 @@ typedef enum : NSUInteger {
 {
     // Pointer to first card picked
     GVGCardButton *cardToMatch = self.cardToMatch;
-d
+
     // Set card to match property to nil in prep for next draw
     self.cardToMatch = nil;
 
