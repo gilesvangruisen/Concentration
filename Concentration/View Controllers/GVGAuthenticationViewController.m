@@ -51,7 +51,7 @@
     // Spring animate the authentication button position y from offscreen origin up to 400
     POPSpringAnimation *buttonEnterPositionAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
     buttonEnterPositionAnimation.fromValue = @(self.view.frame.size.height);
-    buttonEnterPositionAnimation.toValue = @(400);
+    buttonEnterPositionAnimation.toValue = @(self.view.frame.size.height - 180);
 
     // Animate opacity form 0 to 1 while simultaenously sliding up
     POPBasicAnimation *buttonEnterOpacityAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerOpacity];
@@ -104,7 +104,7 @@
 
     [GVGLinkedInWrapper requestAuthorizationWithSuccess:^{
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), successBlock);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), successBlock);
 
     } tokenFailure:^(NSError *error) {
 
